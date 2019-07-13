@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+echo "xdebug.remote_port=$HOSTNAME" > /etc/php/7.3/fpm/php.ini \
+/usr/sbin/php-fpm7.3 -F -O 2>&1 | sed -u 's,.*: \"\(.*\)$,\1,'| sed -u 's,"$,,' 1>&1

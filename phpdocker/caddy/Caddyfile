@@ -1,0 +1,13 @@
+lhsshop.localhost:80 {
+    root /srv/api/public
+
+    fastcgi / php-fpm:9000 php {
+        root /application/public
+    }
+
+    rewrite {
+        to {path} {path}/ index.php?{query}
+    }
+
+    log stdout
+}

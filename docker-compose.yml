@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+
+    web:
+      image: abiosoft/caddy
+      volumes:
+          - ./phpdocker/caddy/Caddyfile:/etc/Caddyfile
+          - caddy_data:/root/.caddy
+          - ./:/srv
+      ports:
+       - 80:80
+       - 443:443
+
+    php-fpm:
+      build: phpdocker/php-fpm
+      working_dir: /application
+      volumes:
+        - ./:/application
+        - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.3/fpm/conf.d/99-overrides.ini
+    
+    db:
+      image: mariadb
+      environment:
+        - MYSQL_ROOT_PASSWORD=root
+      volumes:
+        - db_data:/var/lib/mysql
+
+volumes:
+  caddy_data:
+  db_data:
